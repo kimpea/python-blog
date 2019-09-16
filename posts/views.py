@@ -9,7 +9,7 @@ def posts(request):
     """
     A view which displays all posts in a table on one page
     """
-    posts_list = Post.objects.all()
+    posts = Post.objects.all()
     
     return render(request, "posts.html", {
         "posts": posts,
