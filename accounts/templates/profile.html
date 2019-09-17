@@ -4,9 +4,17 @@
 
 <div id="profile">
     <!-- User Summary -->
-    <h3><strong>Your Profile</strong></h3>
+    <h2><strong>Your Profile</strong></h2>
     <p><strong>Username:</strong> {{user.username}}</p>
     <p><strong>Email:</strong> {{user.email}}</p>
+
+    <!-- User's Posts -->
+    <h2>Your Posts</h2>
+    {% for post in posts %}
+    <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
+    <p>{{ post.body | truncatewords:40 }}</p>
+    <h4>Topic: {{ post.topics }} | Posted by {{ post.user }} on {{ post.date_created }}</h4>
+    {% endfor %}
 </div>
 
 {% endblock %}
