@@ -3,10 +3,10 @@
 {% block content %}
 
 <div id="posts">
-    <h1>All Posts</h1>
+    <h1>{{ posts_total }} Posts Found</h1>
     {% for post in posts %}
     <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
-    <h4>Written by {{ post.user }} on {{ post.date_created }}</h4>
+    <h4>Topic: {{ post.topics }} | Written by {{ post.user }} on {{ post.date_created }}</h4>
     <p>{{ post.body | truncatewords:40 }}</p>
     {% endfor %}
 </div>
