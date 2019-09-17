@@ -5,7 +5,7 @@
 <div id="post_detail">
     <h1>{{ post.title }}</h1>
     <p>{{ post.body }}</p>
-    <p>Written on {{ post.date_created }}</p>
+    <p>Written on {{ post.date_created }} by {{ post.user }}</p>
 </div>
 
 {% endblock %}
