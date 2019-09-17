@@ -32,8 +32,10 @@ def post_detail(request, id):
     A view which displays details for a specific post
     """
     post = get_object_or_404(Post, id=id)
+    topic = get_object_or_404(Topic, id=id)
     return render(request, "post_detail.html", {
         'post': post,
+        'topic': topic
     })
 
 def posts_by_topic(request, id):
