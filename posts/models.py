@@ -7,7 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=254, default=None)
     body = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default="", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
