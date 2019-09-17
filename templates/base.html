@@ -14,7 +14,8 @@
     <div id="wrapper">
         <div id="nav">
             <a href="{% url 'index' %}">Home</a>
-            <a href="{% url 'posts' %}">Posts</a>
+            <a href="{% url 'posts' %}">All Posts</a>
+            <a href="{% url 'topics' %}">All Topics</a>
             {% if user.is_authenticated %}
             <a href="{% url 'add_post' %}">Add Post</a>
             <a href="{% url 'profile' %}">Profile</a>
