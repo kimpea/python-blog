@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.contrib import messages
-from .models import Post
+from .models import Post, Topic
 from .forms import AddPostForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -13,9 +13,18 @@ def posts(request):
     A view which displays all posts in a table on one page
     """
     posts = Post.objects.all()
-    
+    posts_total = Post.objects.all().count()
     return render(request, "posts.html", {
         "posts": posts,
+        "posts_total": posts_total
+    })
+
+def topics(request):
+    topics = Topic.objects.all()
+    topics_total = Topic.objects.all().count()
+    return render(request, "topics.html", {
+        "topics": topics,
+        "topics_total": topics_total
     })
 
 def post_detail(request, id):
@@ -27,6 +36,14 @@ def post_detail(request, id):
         'post': post,
     })
 
+def posts_by_topic(request, id):
+    topic = get_object_or_404(Topic, id=id)
+    posts_total = Post.objects.filter(topic=topic).count()
+    return render(request, 'posts_by_topic.html', {
+        'topic': topic,
+        'posts_total': posts_total,
+        'posts': Post.objects.filter(topic=topic)
+    })
 
 @login_required
 def add_post(request, id=None):
