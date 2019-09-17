@@ -2,6 +2,15 @@
 
 {% block content %}
 
-<h1>Welcome to Console Cove</h1>
+<h1>Welcome to Forum</h1>
+
+<div id="posts">
+    <h2>Most Recent Posts</h2>
+    {% for post in posts %}
+    <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
+    <h4>Written by {{ post.user }} on {{ post.date_created }}</h4>
+    <p>{{ post.body | truncatewords:40 }}</p>
+    {% endfor %}
+</div>
 
 {% endblock %}
