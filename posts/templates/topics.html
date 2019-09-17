@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="topics">
+    <h2>{{ topics_total }} Topics Found</h2>
+    <ul>
+        {% for topic in topics %}
+
+        <li><a href="{% url 'posts_by_topic' topic.id %}">{{ topic.name }}</a></li>
+
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
