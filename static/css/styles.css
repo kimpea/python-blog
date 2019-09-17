@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    margin: 0;
+    background-color: #e5e5e5;
+}
+
 .alert {
     padding: 20px;
     background-color: #f44336;
@@ -17,4 +26,15 @@
 
 .closebtn:hover {
     color: black;
+}
+
+#wrapper {
+    margin: 0 20vw 0 20vw;
+    background-color: #fff;
+    height: 100%;
+    padding: 0 2rem 0 2rem;
+}
+
+#nav {
+    padding: 1rem 0 1rem 0;
 }
