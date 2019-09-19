@@ -6,9 +6,34 @@
     <h2>{{ posts_total }} {{ topic.name }} Posts</h2>
     {% for post in posts %}
     <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
-    <p>{{ post.body | truncatewords:40 }}</p>
-    <h4>Posted by {{ post.user }} on {{ post.date_created }}</h4>
+    <p>{{ post.body | safe | truncatewords:40 }}</p>
+    <span class="text-muted">Posted by {{ post.user }} on {{ post.date_created }}</span>
     {% endfor %}
+
+
+    <!-- Pagination -->
+    {% if posts.has_other_pages %}
+    <ul class="pagination">
+        {% if posts.has_previous %}
+        <li><a href="?page={{ posts.previous_page_number }}"><i class="fas fa-chevron-left"></i></a></li>
+        {% else %}
+        <li class="disabled"><i class="fas fa-chevron-left"></i></li>
+        {% endif %}
+
+        {% for i in posts.paginator.page_range %}
+        {% if posts.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if posts.has_next %}
+        <li><a href="?page={{ posts.next_page_number }}"><i class="fas fa-chevron-right"></i></a></li>
+        {% else %}
+        <li class="disabled"><i class="fas fa-chevron-right"></i></li>
+        {% endif %}
+    </ul>
+    {% endif %}
 </div>
 
 {% endblock %}
