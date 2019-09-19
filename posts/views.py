@@ -5,6 +5,7 @@ from .models import Post, Topic
 from .forms import AddPostForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import datetime
 
 # Create your views here.
@@ -14,6 +15,17 @@ def posts(request):
     """
     posts = Post.objects.all()
     posts_total = Post.objects.all().count()
+
+    # Pagination for bugs
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts, 4)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     return render(request, "posts.html", {
         "posts": posts,
         "posts_total": posts_total
@@ -39,10 +51,21 @@ def post_detail(request, id):
 def posts_by_topic(request, id):
     topic = get_object_or_404(Topic, id=id)
     posts_total = Post.objects.filter(topic=topic).count()
+    posts = Post.objects.filter(topic=topic)
+    # Pagination for bugs
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts, 4)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     return render(request, 'posts_by_topic.html', {
         'topic': topic,
         'posts_total': posts_total,
-        'posts': Post.objects.filter(topic=topic)
+        'posts': posts
     })
 
 @login_required
