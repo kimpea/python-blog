@@ -24,5 +24,4 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('posts/', include(urls_posts)),
     path('accounts/', include(urls_accounts)),
-
 ]
