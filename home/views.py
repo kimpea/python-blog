@@ -6,4 +6,6 @@ from posts.models import Post
 def index(request):
     """ A view that renders the index page """
     posts = Post.objects.all().order_by('-date_created')[:3]
-    return render(request, "index.html", {"posts": posts,})
+    return render(request, "index.html", {
+        "posts": posts,
+    })
