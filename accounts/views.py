@@ -3,6 +3,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from posts.models import Post
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from accounts.forms import UserLoginForm, UserRegistrationForm
 
 # Create your views here.
@@ -72,6 +73,17 @@ def user_profile(request):
     if request.user.is_authenticated:
         user = User.objects.get(email=request.user.email)
         posts = Post.objects.filter(user=user)
+
+        # Pagination for bugs
+        page = request.GET.get('page', 1)
+        paginator = Paginator(posts, 4)
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+
         return render(request, 'profile.html', {"user": user,
                                                 "posts": posts,
         })
