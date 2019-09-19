@@ -8,8 +8,8 @@
     <h2>Most Recent Posts</h2>
     {% for post in posts %}
     <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
-    <h4>Written by {{ post.user }} on {{ post.date_created }}</h4>
-    <p>{{ post.body | truncatewords:40 }}</p>
+    <p>{{ post.body | safe | truncatewords:40 }}</p>
+    <span class="text-muted">Topic: {{ post.topic }} | Posted by {{ post.user }} on {{ post.date_created }}</span>
     {% endfor %}
 </div>
 
