@@ -14,6 +14,7 @@
     <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
     <p>{{ post.body | safe | truncatewords:40 }}</p>
     <h4>Topic: {{ post.topic }} | Posted by {{ post.user }} on {{ post.date_created }}</h4>
+    <a href="{% url 'edit_post' post.id %}">Edit Post</a>
     {% endfor %}
 
     <!-- Pagination -->
