@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from .views import posts, topics, post_detail, posts_by_topic, add_post
+from .views import posts, topics, post_detail, posts_by_topic, add_post, edit_post
 
 urlpatterns = [
     path('posts/', posts, name="posts"),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('post_detail/<int:id>/', post_detail, name="post_detail"),
     path('posts_by_topic/<int:id>/', posts_by_topic, name="posts_by_topic"),
     path('add_post/', add_post, name='add_post'),
+    path('edit_post/<int:id>', edit_post, name='edit_post')
 ]
