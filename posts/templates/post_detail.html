@@ -6,6 +6,9 @@
     <h1>{{ post.title }}</h1>
     <p>{{ post.body|safe }}</p>
     <span class="text-muted">Topic: {{ post.topic }} | Posted by {{ post.user }} on {{ post.date_created }}</span>
+    {% if user.is_authenticated %}
+    <a href="{% url 'edit_post' post.id %}">Edit Post</a>
+    {% endif %}
 </div>
 
 {% endblock %}
