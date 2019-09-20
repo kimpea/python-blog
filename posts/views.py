@@ -80,8 +80,24 @@ def add_post(request, id=None):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
+            post.date_created = timezone.now()
             post.save()
             return redirect(post_detail, post.id)
     else:
         form = AddPostForm(instance=post)
     return render(request, 'add_post.html', {'form': form})
+
+@login_required
+def edit_post(request, id):
+   post = get_object_or_404(Post, pk=id)
+   if request.method == "POST":
+       form = AddPostForm(request.POST, request.FILES, instance=post)
+       if form.is_valid():
+           post = form.save(commit=False)
+           post.user = request.user
+           post.date_updated = timezone.now()
+           post.save()
+           return redirect(post_detail, post.id)
+   else:
+       form = AddPostForm(instance=post)
+   return render(request, 'edit_post.html', {'form': form})
