@@ -9,6 +9,39 @@
     {% if user.is_authenticated %}
     <a href="{% url 'edit_post' post.id %}">Edit Post</a>
     {% endif %}
+
+    <!-- Comments -->
+    {% if comments_count == 0 %}
+    <h4><strong>Comments (0)</strong></h4>
+    <p class="lead">No comments</p>
+    {% else %}
+    <h4><strong>Comments ({{ comments_count }})</strong></h4>
+    <hr>
+    {% for comment in comments %}
+    <div class="inline">
+        <div>
+            <p class='description'>{{comment.comment}}</p>
+            <p class="text-muted">Posted by <strong>{{comment.user}}</strong> on {{comment.date_created}}</p>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+
+    {% endif %}
+
+    <!-- Comment Form -->
+    {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'post_comment' post.id %}">
+        {% csrf_token %}
+        <h6>Leave a comment:</h6>
+        <textarea name="comment" cols="5" rows="4" class="form-control" required="" id="comment"></textarea>
+        <br>
+        <div class="form-actions">
+            <button class="btn btn-primary inline" type="submit">Post</button>
+        </div>
+    </form>
+    {% else %}
+    {% endif %}
 </div>
 
 {% endblock %}
