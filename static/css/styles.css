@@ -7,38 +7,6 @@ html, body {
     background-color: #e5e5e5;
 }
 
-.alert {
-    padding: 20px;
-    background-color: #f44336;
-    color: white;
-}
-
-.closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.closebtn:hover {
-    color: black;
-}
-
-#wrapper {
-    margin: 0 20vw 0 20vw;
-    background-color: #fff;
-    min-height: 100%;
-    padding: 0 2rem 2rem 2rem;
-}
-
-#nav {
-    padding: 1rem 0 1rem 0;
-}
-
 .pagination {
     list-style-type: none;
     margin: 0;
@@ -51,4 +19,8 @@ html, body {
 
 .text-muted {
     color: #909090;
+}
+
+#content-wrapper {
+    padding: 0.8rem;
 }
