@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.contrib import messages
-from .models import Post, Topic
-from .forms import AddPostForm
+from .models import Post, Topic, PostComment
+from .forms import AddPostForm, PostCommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -44,8 +44,14 @@ def post_detail(request, id):
     A view which displays details for a specific post
     """
     post = get_object_or_404(Post, id=id)
+    comments = PostComment.objects.filter(post=id).order_by('date_created')
+    comments_count = comments.count()
+    comment_form = PostCommentForm()
     return render(request, "post_detail.html", {
         'post': post,
+        'comment_form': comment_form, 
+        'comments': comments,
+        'comments_count': comments_count,
     })
 
 def posts_by_topic(request, id):
@@ -89,7 +95,12 @@ def add_post(request, id=None):
 
 @login_required
 def edit_post(request, id):
-   post = get_object_or_404(Post, pk=id)
+   post = get_object_or_404(Post, id=id)
+
+   if post.user.id != request.user.id:
+        messages.error(request, "You cannot edit someone else's post!")
+        return redirect('post_detail', post.id)
+
    if request.method == "POST":
        form = AddPostForm(request.POST, request.FILES, instance=post)
        if form.is_valid():
@@ -101,3 +112,15 @@ def edit_post(request, id):
    else:
        form = AddPostForm(instance=post)
    return render(request, 'edit_post.html', {'form': form})
+
+@login_required
+def post_comment(request, id=id):
+    """ Saves a posted comment """
+    post = get_object_or_404(Post, id=id)
+    comment_form = PostCommentForm(request.POST, request.FILES)
+    if comment_form.is_valid():
+        instance = comment_form.save(commit=False)
+        instance.user = request.user
+        instance.post = post
+        comment_form.save()
+    return redirect(post_detail, id)
