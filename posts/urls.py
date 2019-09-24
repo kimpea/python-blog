@@ -15,11 +15,10 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from .views import posts, topics, post_detail, posts_by_topic, add_post, edit_post, post_comment
+from .views import posts, post_detail, posts_by_topic, add_post, edit_post, post_comment
 
 urlpatterns = [
     path('posts/', posts, name="posts"),
-    path('topics/', topics, name="topics"),
     path('post_detail/<int:id>/', post_detail, name="post_detail"),
     path('posts_by_topic/<int:id>/', posts_by_topic, name="posts_by_topic"),
     path('add_post/', add_post, name='add_post'),
