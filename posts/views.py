@@ -14,6 +14,7 @@ def posts(request):
     A view which displays all posts in a table on one page
     """
     posts = Post.objects.all()
+    topics = Topic.objects.all()
     posts_total = Post.objects.all().count()
 
     # Pagination for bugs
@@ -28,15 +29,8 @@ def posts(request):
 
     return render(request, "posts.html", {
         "posts": posts,
-        "posts_total": posts_total
-    })
-
-def topics(request):
-    topics = Topic.objects.all()
-    topics_total = Topic.objects.all().count()
-    return render(request, "topics.html", {
-        "topics": topics,
-        "topics_total": topics_total
+        "posts_total": posts_total,
+        "topics": topics
     })
 
 def post_detail(request, id):
@@ -44,6 +38,7 @@ def post_detail(request, id):
     A view which displays details for a specific post
     """
     post = get_object_or_404(Post, id=id)
+    topics = Topic.objects.all()
     comments = PostComment.objects.filter(post=id).order_by('date_created')
     comments_count = comments.count()
     comment_form = PostCommentForm()
@@ -52,10 +47,12 @@ def post_detail(request, id):
         'comment_form': comment_form, 
         'comments': comments,
         'comments_count': comments_count,
+        'topics': topics
     })
 
 def posts_by_topic(request, id):
     topic = get_object_or_404(Topic, id=id)
+    topics = Topic.objects.all()
     posts_total = Post.objects.filter(topic=topic).count()
     posts = Post.objects.filter(topic=topic)
     # Pagination for bugs
@@ -70,6 +67,7 @@ def posts_by_topic(request, id):
 
     return render(request, 'posts_by_topic.html', {
         'topic': topic,
+        'topics': topics,
         'posts_total': posts_total,
         'posts': posts
     })
@@ -80,6 +78,7 @@ def add_post(request, id=None):
     A view which renders page for add_post form. 
     User must be logged in to access this page. 
     """
+    topics = Topic.objects.all()
     post = get_object_or_404(Post, id=id) if id else None
     if request.method == "POST":
         form = AddPostForm(request.POST, request.FILES, instance=post)
@@ -91,17 +90,21 @@ def add_post(request, id=None):
             return redirect(post_detail, post.id)
     else:
         form = AddPostForm(instance=post)
-    return render(request, 'add_post.html', {'form': form})
+    return render(request, 'add_post.html', {
+        'form': form,
+        'topics': topics
+    })
 
 @login_required
 def edit_post(request, id):
-   post = get_object_or_404(Post, id=id)
+    topics = Topic.objects.all()
+    post = get_object_or_404(Post, id=id)
 
-   if post.user.id != request.user.id:
+    if post.user.id != request.user.id:
         messages.error(request, "You cannot edit someone else's post!")
         return redirect('post_detail', post.id)
 
-   if request.method == "POST":
+    if request.method == "POST":
        form = AddPostForm(request.POST, request.FILES, instance=post)
        if form.is_valid():
            post = form.save(commit=False)
@@ -109,9 +112,12 @@ def edit_post(request, id):
            post.date_updated = timezone.now()
            post.save()
            return redirect(post_detail, post.id)
-   else:
+    else:
        form = AddPostForm(instance=post)
-   return render(request, 'edit_post.html', {'form': form})
+    return render(request, 'edit_post.html', {
+       'form': form,
+       'topics': topics
+    })
 
 @login_required
 def post_comment(request, id=id):
