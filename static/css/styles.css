@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+/*-- Unique Styles --*/
+
 html, body {
     font-family: 'Roboto', sans-serif;
     height: 100%;
     margin: 0;
-    background-color: #e5e5e5;
+    background-color: #e5e5e5 !important;
 }
 
 .pagination {
@@ -21,6 +23,41 @@ html, body {
     color: #909090;
 }
 
-#content-wrapper {
-    padding: 0.8rem;
+#content {
+    padding: 1rem;
 }
+
+#wrapper {
+    background-color: #fff;
+    margin: 0 20vw 0 20vw;
+    min-height: 100vh;
+}
+
+#side-bar {
+    margin: 0;
+    padding-top: 3.8rem;
+}
+
+#side-bar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+/*-- Navigation Styles --*/
+
+.nav-link {
+    font-size: 1.1rem;
+}
+
+@media screen and (max-width: 1024px) {
+    #wrapper {
+        margin: 0;
+    }
+    #content {
+        padding: 1.5rem;
+    }
+}
+
+/*-- Post Detail Styles --*/
+
