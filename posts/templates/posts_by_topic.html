@@ -8,6 +8,7 @@
     <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
     <p>{{ post.body | safe | truncatewords:40 }}</p>
     <span class="text-muted">Posted by {{ post.user }} on {{ post.date_created }}</span>
+    <hr class="my-4">
     {% endfor %}
 
 
