@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div id="wrapper">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{% url 'index' %}">FORUM</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
@@ -25,7 +25,6 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'posts' %}">All Posts</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'topics' %}">All Topics</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'add_post' %}">Add Post</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
@@ -45,9 +44,24 @@
             <strong>{% for message in messages %}{{ message }}{% endfor %}</strong>
         </div>
         {% endif %}
-        
-        <div id="content-wrapper">
-            {% block content %}{% endblock %}
+
+        <div id="content">
+            <div class="row">
+                <div class="col-lg-9">
+                    {% block content %}{% endblock %}
+                </div>
+                <div class="col-lg-3" id="side-bar">
+                    <h5>Topics</h5>
+                    <ul>
+                        {% for topic in topics %}
+
+                        <li><a href="{% url 'posts_by_topic' topic.id %}">{{ topic.name }}</a></li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
