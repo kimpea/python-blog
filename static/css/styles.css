@@ -6,7 +6,7 @@ html, body {
     font-family: 'Roboto', sans-serif;
     height: 100%;
     margin: 0;
-    background-color: #e5e5e5 !important;
+    background-color: #da627d !important;
 }
 
 .pagination {
@@ -29,7 +29,7 @@ html, body {
 
 #wrapper {
     background-color: #fff;
-    margin: 0 20vw 0 20vw;
+    margin: 0 15vw 0 15vw;
     min-height: 100vh;
 }
 
@@ -61,3 +61,6 @@ html, body {
 
 /*-- Post Detail Styles --*/
 
+#posts {
+    padding-left: 2rem;
+}
